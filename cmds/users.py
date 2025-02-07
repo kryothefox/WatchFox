@@ -20,8 +20,10 @@ class Users(commands.Cog):
         for element in userInfo:
             _.add_field(name=element,value=f"`{userInfo[element]}`",inline=False)
         _.add_field(name="",value="> IP and MAC Address fields are satirical and do not reflect the real values")
+        _.add_field(name="",value="Due to message length, this message will be deleted after 60 seconds upon issue.")
         _.set_thumbnail(url=member.avatar.url)
         await ctx.send_response(embed=_)
+        await ctx.delete(delay=60)
         
 def setup(bot):
     bot.add_cog(Users(bot))

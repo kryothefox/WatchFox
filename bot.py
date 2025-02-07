@@ -23,7 +23,7 @@ async def on_application_command_error(
 ):
     from util import exceptionhelper
     _ = exceptionhelper.exceptionEmbed(ctx,error)
-    await ctx.send_response(embed=_)
+    await ctx.send_followup(embed=_)
     await ctx.delete(delay=5)
 
 token  = str(os.getenv("TOKEN"))

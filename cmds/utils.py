@@ -15,8 +15,6 @@ class Utils(commands.Cog):
         global startTime
         startTime = time.time()
 
-    
-    
     @debugcmds.command(name="ping",description="returns heartbeat latency Owo")
     @commands.cooldown(1,10,commands.BucketType.user)
     async def ping(self, ctx: discord.ApplicationContext):
@@ -30,10 +28,6 @@ class Utils(commands.Cog):
         _ = embedhelper.createEmbed('Bot Uptime', f'The bot has been running for {uptime} {"minutes" if uptime != 1 else "minute"}.',ctx)
         _.add_field(name='Start time:',value=time.strftime('%H:%M:%S%p %d-%m-%y',time.localtime(startTime)))
         await ctx.send_response(embed=_)
-
-
-
-
 
 def setup(bot):
     bot.add_cog(Utils(bot))
