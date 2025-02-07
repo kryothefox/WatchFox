@@ -1,6 +1,6 @@
 import discord, time, datetime
 from discord.ext import commands
-from util import *
+from util import embedhelper, getsysteminfo
 
 class Utils(commands.Cog):
     def __init__(self, bot):
@@ -8,6 +8,7 @@ class Utils(commands.Cog):
 
     utilgroup = discord.SlashCommandGroup("utility","utility commands for basic debugging tasks or checking if bot alive ;w;")
     debugcmds = utilgroup.create_subgroup("debug","commands for debugging purposes -w-")
+    infocmds = utilgroup.create_subgroup("info","commands for debugging purposes -w-")
 
     @discord.Cog.listener()
     async def on_ready(self):
@@ -25,9 +26,21 @@ class Utils(commands.Cog):
     @commands.cooldown(1,10,commands.BucketType.user)
     async def uptime(self,ctx: discord.ApplicationContext):
         uptime = int(round(datetime.timedelta(seconds=time.time()-startTime).seconds/60))
-        _ = embedhelper.createEmbed('Bot Uptime', f'The bot has been running for {uptime} {"minutes" if uptime != 1 else "minute"}.',ctx)
+        _ = embedhelper.createEmbed('Bot Uptime ;w;', f'The bot has been running for {uptime} {"minutes" if uptime != 1 else "minute"}.',ctx)
         _.add_field(name='Start time:',value=time.strftime('%H:%M:%S%p %d-%m-%y',time.localtime(startTime)))
         await ctx.send_response(embed=_)
+
+    @infocmds.command(name="sysinfo",description="returns information about the system the bot is hosted on =w=")
+    @commands.cooldown(1,20,commands.BucketType.user)
+    async def sysinfo(self,ctx: discord.ApplicationContext):
+        _ = embedhelper.createEmbed("System Information ;w;","",ctx)
+        systeminfo = getsysteminfo.getSystemInfo()
+        for stat in systeminfo:
+            _.add_field(name=stat,value=systeminfo[stat],inline=True)
+        await ctx.respond(embed=_)
+        await ctx.delete(delay=30)
+
+
 
 def setup(bot):
     bot.add_cog(Utils(bot))
