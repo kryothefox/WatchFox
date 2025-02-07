@@ -12,11 +12,17 @@ watchfox = discord.Bot()
 
 @watchfox.event
 async def on_ready():
-    print("i love cocks")
+    import datetime
+    print(f"Bot started on {str(datetime.date.today())} at {datetime.datetime.now().strftime('%H:%M %p')}")
 
 watchfox.load_extension('cmds.utils')
 
-
+@watchfox.event
+async def on_application_command_error(
+    ctx: discord.ApplicationContext, error: discord.DiscordException
+):
+    _ = exceptionhelper.exceptionEmbed(ctx,error)
+    await ctx.send_response(embed=_)
 
 token  = str(os.getenv("TOKEN"))
 watchfox.run(token)
