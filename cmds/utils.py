@@ -20,13 +20,14 @@ class Utils(commands.Cog):
     @debugcmds.command(name="ping",description="returns heartbeat latency Owo")
     @commands.cooldown(1,10,commands.BucketType.user)
     async def ping(self, ctx: discord.ApplicationContext):
-            _ = embedhelper.createEmbed(embedtitle="Pong?",embeddescription=f"Latency: {round(ctx.bot.latency,4)*1000}ms",ctx=ctx)
+            _ = embedhelper.createEmbed(embedtitle="Pong?",embeddescription=f"Latency: {round(ctx.bot.latency*1000,ndigits=2)}ms",ctx=ctx)
             await ctx.send_response(embed=_)
     
     @debugcmds.command(name="uptime",description="returns bot uptime :3")
     @commands.cooldown(1,10,commands.BucketType.user)
     async def uptime(self,ctx: discord.ApplicationContext):
-        _ = embedhelper.createEmbed('Bot Uptime', f'The bot has been running for {datetime.timedelta(seconds=int(round(time.time()-startTime))).seconds} second(s)',ctx)
+        uptime = int(round(datetime.timedelta(seconds=time.time()-startTime).seconds/60))
+        _ = embedhelper.createEmbed('Bot Uptime', f'The bot has been running for {uptime} {"minutes" if uptime != 1 else "minute"}.',ctx)
         _.add_field(name='Start time:',value=time.strftime('%H:%M:%S%p %d-%m-%y',time.localtime(startTime)))
         await ctx.send_response(embed=_)
 
