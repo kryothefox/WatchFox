@@ -19,8 +19,7 @@ watchfox.load_extension('cmds.users')
 
 @watchfox.event
 async def on_application_command_error(
-    ctx: discord.ApplicationContext, error: discord.DiscordException
-):
+    ctx: discord.ApplicationContext, error: discord.DiscordException):
     from util import exceptionhelper
     _ = exceptionhelper.exceptionEmbed(ctx,error)
     await ctx.respond(embed=_)
