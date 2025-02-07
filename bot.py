@@ -1,5 +1,5 @@
 #IMPORT LIBRARIES
-import discord 
+import discord, datetime
 from discord.ext import commands
 from dotenv import load_dotenv
 import os
@@ -16,6 +16,12 @@ async def on_ready():
 
 watchfox.load_extension('cmds.utils')
 watchfox.load_extension('cmds.users')
+watchfox.load_extension('cmds.help')
+
+@watchfox.event
+async def on_application_command(ctx:discord.ApplicationContext):
+    print(f"{ctx.command} was issued by {ctx.author.name} at {datetime.datetime.now()}")
+
 
 @watchfox.event
 async def on_application_command_error(
@@ -25,5 +31,5 @@ async def on_application_command_error(
     await ctx.respond(embed=_)
     await ctx.delete(delay=5)
 
-token  = str(os.getenv("TOKEN"))
+token = str(os.getenv("TOKEN"))
 watchfox.run(token)
