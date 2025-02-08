@@ -1,6 +1,8 @@
 import discord, time, datetime
 from discord.ext import commands
 from util import embedhelper, getsysteminfo
+from util.logger import log
+
 
 class Utils(commands.Cog):
     def __init__(self, bot):
@@ -12,7 +14,7 @@ class Utils(commands.Cog):
 
     @discord.Cog.listener()
     async def on_ready(self):
-        print(f'{self.qualified_name} has been loaded')
+        log(f'{self.qualified_name} has been loaded')
         global startTime
         startTime = time.time()
 

@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from util.logger import log
 
 
 class Users(commands.Cog):
@@ -8,7 +9,7 @@ class Users(commands.Cog):
 
     @discord.Cog.listener()
     async def on_ready(self):
-        print(f'{self.qualified_name} has been loaded')
+        log(f'{self.qualified_name} has been loaded')
 
     usergroup = discord.SlashCommandGroup("users","useful commands for user interactions like profiles")
     
