@@ -9,10 +9,11 @@
 > * and more...  
 
 ## Features Implemented
-- [X] Basic Functionality
+- [X] ~~Basic Functionality~~
 - [ ] `WIP` User specific Interactions
 - [ ] `WIP` Fun interactions
 
 
 ### Note
 ` This bot is in it's very very alpha stages. And may not be useful for your server.`
+
