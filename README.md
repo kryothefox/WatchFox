@@ -1,3 +1,12 @@
-# 'WatchFox' a multi-purposed Discord bot
+# 'WatchFox', a utility based, multipurposed Discord bot
 
-* This bot is in it's very very alpha stages.
+## Planned Features
+> * Fun interactions with minigames
+> * Moderation tools and commands
+> * Image or GIF searches
+> * Voice-chat activies (Music, dynamic sound-board, TTS, etc)
+> * and more...  
+
+
+
+` This bot is in it's very very alpha stages. `
