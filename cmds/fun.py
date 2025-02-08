@@ -10,7 +10,7 @@ class Fun(commands.Cog):
     async def on_ready(self):
         print(f'{self.qualified_name} has been loaded')
 
-    fungroup = discord.SlashCommandGroup("fun","fun stuff for entertainment uwu", guild_ids=[1309145585701617734])
+    fungroup = discord.SlashCommandGroup("fun","fun stuff for entertainment uwu")
 
     @fungroup.command(name="8ball",description="funny random thingy")
     @commands.cooldown(1,10,commands.BucketType.user)

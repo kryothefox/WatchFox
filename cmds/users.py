@@ -10,7 +10,7 @@ class Users(commands.Cog):
     async def on_ready(self):
         print(f'{self.qualified_name} has been loaded')
 
-    usergroup = discord.SlashCommandGroup("users","useful commands for user interactions like profiles", guild_ids=[1309145585701617734])
+    usergroup = discord.SlashCommandGroup("users","useful commands for user interactions like profiles")
     
 
     @usergroup.command(name="whois",description="returns information about the user >:3")
