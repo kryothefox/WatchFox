@@ -6,7 +6,7 @@ class Utils(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    utilgroup = discord.SlashCommandGroup("utility","utility commands for basic debugging tasks or checking if bot alive ;w;")
+    utilgroup = discord.SlashCommandGroup("utility","utility commands for basic debugging tasks or checking if bot alive ;w;", guild_ids=[1309145585701617734])
     debugcmds = utilgroup.create_subgroup("debug","commands for debugging purposes -w-")
     infocmds = utilgroup.create_subgroup("info","commands for debugging purposes -w-")
 

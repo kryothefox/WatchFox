@@ -1,5 +1,6 @@
-import discord, time, datetime
+import discord
 from discord.ext import commands
+
 
 class Users(commands.Cog):
     def __init__(self, bot):
@@ -8,10 +9,11 @@ class Users(commands.Cog):
     @discord.Cog.listener()
     async def on_ready(self):
         print(f'{self.qualified_name} has been loaded')
-        global startTime
-        startTime = time.time()
 
-    @discord.user_command(name="whois",description="returns information about the user >:3")
+    usergroup = discord.SlashCommandGroup("users","useful commands for user interactions like profiles", guild_ids=[1309145585701617734])
+    
+
+    @usergroup.command(name="whois",description="returns information about the user >:3")
     @commands.cooldown(1,60,commands.BucketType.user)
     async def whois(self, ctx, member: discord.Member):
         from util import userinfofetch,embedhelper
@@ -24,6 +26,27 @@ class Users(commands.Cog):
         _.set_thumbnail(url=member.avatar.url)
         await ctx.send_response(embed=_)
         await ctx.delete(delay=60)
+    
+    @usergroup.command(name="getavatar", description="gets avatar of the user >:3")
+    @commands.cooldown(1,30,commands.BucketType.user)
+    async def getavatar(self,ctx, member:discord.Member):
+        from util import embedhelper
+        _ = embedhelper.createEmbed(f"Avatar of {member.display_name}","",ctx)
+        _.set_image(url=member.avatar.url)
+        await ctx.send_response(embed=_)
+    
+    @usergroup.command(name="accountage",description="returns the account age of the user")
+    @commands.cooldown(1,10,commands.BucketType.user)
+    async def accountage(self, ctx:discord.ApplicationContext, member:discord.Member):
+        from util import embedhelper, userinfofetch
+        age = userinfofetch.getAge(member).days
+        _ = embedhelper.createEmbed(f"Account age for {member.display_name}","",ctx)
+        _.set_thumbnail(url=member.avatar.url)
+        _.add_field(name=f"This account is {age} days old!",value="",inline=False)
+        _.add_field(name=f"",value=f"created at {member.created_at}")
+        await ctx.send_response(embed=_)
+        
+    
         
 def setup(bot):
     bot.add_cog(Users(bot))

@@ -17,11 +17,15 @@ async def on_ready():
 watchfox.load_extension('cmds.utils')
 watchfox.load_extension('cmds.users')
 watchfox.load_extension('cmds.help')
+watchfox.load_extension('cmds.fun')
 
 @watchfox.event
 async def on_application_command(ctx:discord.ApplicationContext):
+    from util import embedhelper
     print(f"{ctx.command} was issued by {ctx.author.name} at {datetime.datetime.now()}")
-
+    if(ctx.guild_id != 1309145585701617734):
+        await ctx.delete(60) 
+     
 
 @watchfox.event
 async def on_application_command_error(
@@ -29,7 +33,7 @@ async def on_application_command_error(
     from util import exceptionhelper
     _ = exceptionhelper.exceptionEmbed(ctx,error)
     await ctx.respond(embed=_)
-    await ctx.delete(delay=5)
+    #await ctx.delete(delay=5)
 
 token = str(os.getenv("TOKEN"))
 watchfox.run(token)
