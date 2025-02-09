@@ -22,10 +22,8 @@ watchfox.load_extension('cmds.fun')
 
 @watchfox.event
 async def on_application_command(ctx:discord.ApplicationContext):
-    from util import embedhelper
     log(f"{ctx.command} was issued by {ctx.author.name} at {datetime.datetime.now()}")
-    if(ctx.guild_id != 1309145585701617734):
-        await ctx.delete(60) 
+    
      
 
 @watchfox.event
@@ -33,6 +31,7 @@ async def on_application_command_error(
     ctx: discord.ApplicationContext, error: discord.DiscordException):
     from util import exceptionhelper
     _ = exceptionhelper.exceptionEmbed(ctx,error)
+    log(str(error))
     await ctx.respond(embed=_)
     #await ctx.delete(delay=5)
 
