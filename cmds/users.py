@@ -27,7 +27,7 @@ class Users(commands.Cog):
         _.add_field(name="",value="Due to message length, this message will be deleted after 60 seconds upon issue.")
         _.set_thumbnail(url=member.avatar.url)
         await ctx.respond(embed=_)
-        await ctx.delete(delay=10)
+        await ctx.delete(delay=60)
     
     @usergroup.command(name="getavatar", description="gets avatar of the user >:3")
     @commands.cooldown(1,30,commands.BucketType.user)
