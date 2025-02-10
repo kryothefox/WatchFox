@@ -28,7 +28,7 @@ class Fun(commands.Cog):
             raise ValueError("The question has to be more than 4 characters long, the magical eight-ball fades.")
 
     @fungroup.command(name="speechbubble",description="creates a speech bubble from an image :sob:")
-    #@commands.cooldown(1,30,commands.BucketType.user)
+    @commands.cooldown(1,30,commands.BucketType.user)
     async def speechbubble(self, ctx: discord.ApplicationContext, attachment:discord.Option(discord.SlashCommandOptionType.attachment,description="upload an image",required=False),url:discord.Option(str, "input link",default=None,required=False)):
         await ctx.defer()
 
@@ -41,19 +41,41 @@ class Fun(commands.Cog):
             await ctx.respond(content="do not attach 2 files silly smh")
         elif(attachment or url):
             attachment = attachment if not url else url
-            
             tempPath = pathlib.Path('./assets/temp.gif')
             image = imagehandler.overlayBubble(attachment)
             image.save(str(tempPath))
             discordFile = discord.File('./assets/temp.gif','temp.gif')
             _ = embedhelper.createEmbed(embedtitle="",embeddescription="",ctx=ctx)
             _.set_image(url='attachment://temp.gif')
-            #await ctx.respond(file=discord.File(str(tempPath)))
             await ctx.respond(file=discordFile,embed=_)
             image.close()
-            
         else:
             await ctx.respond(content="no attachment provided -w-")
+
+    @fungroup.command(name='rolldice',description='rolls a dice? ;w;')
+    @commands.cooldown(1,5,commands.BucketType.user)
+    async def rolldice(self, ctx: discord.ApplicationContext, dice:discord.Option(int,required=False, default=6,description="the dice number")):
+        await ctx.defer()
+        from util import embedhelper
+        from random import randint
+        listOfDiceNumbers = []
+        for x in range(0,randint(50,500)):
+            from random import randint
+            listOfDiceNumbers.append(str(randint(1,dice)))
+        _ = embedhelper.createEmbed(embedtitle=f'rolled a {dice} dice :3',embeddescription="",ctx=ctx)
+        _.add_field(name="dice",value=listOfDiceNumbers[randint(0,len(listOfDiceNumbers))])
+        await ctx.respond(embed=_)
+        listOfDiceNumbers = []
+
+    @fungroup.command(name='flipcoin',description="it flips a coin, either paws(heads) or tails")
+    @commands.cooldown(1,5,commands.BucketType.user)
+    async def flipcoin(self, ctx:discord.ApplicationContext):
+        from random import randint
+        from util import embedhelper
+        await ctx.defer()
+        _ = embedhelper.createEmbed(embedtitle="the coin was flipped!11",embeddescription='',ctx=ctx)
+        _.add_field(name='coin',value="tails" if randint(1,500)%2 > 0 else "paws")
+        await ctx.respond(embed=_)
 
 
 

@@ -2,6 +2,7 @@
 import discord, datetime
 from discord.ext import commands
 from dotenv import load_dotenv
+from util import embedhelper
 from util.logger import log
 import os
 #DEFINE .ENV OR ELSE NO TOKEN X3
@@ -15,10 +16,12 @@ async def on_ready():
     import datetime
     log(f"Bot started on {str(datetime.date.today())} at {datetime.datetime.now().strftime('%H:%M %p')}")
 
+
 watchfox.load_extension('cmds.utils')
 watchfox.load_extension('cmds.users')
 watchfox.load_extension('cmds.help')
 watchfox.load_extension('cmds.fun')
+
 
 @watchfox.event
 async def on_application_command(ctx:discord.ApplicationContext):
@@ -34,6 +37,7 @@ async def on_application_command_error(
     log(str(error))
     await ctx.respond(embed=_)
     await ctx.delete(delay=10)
+
 
 token = str(os.getenv("TOKEN"))
 watchfox.run(token)
