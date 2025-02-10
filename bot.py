@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from util import embedhelper
 from util.logger import log
 import os
+
 #DEFINE .ENV OR ELSE NO TOKEN X3
 dotenv = load_dotenv('.\\assets\\.env')
 if(not dotenv): raise FileNotFoundError

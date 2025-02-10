@@ -31,7 +31,6 @@ class Fun(commands.Cog):
     @commands.cooldown(1,30,commands.BucketType.user)
     async def speechbubble(self, ctx: discord.ApplicationContext, attachment:discord.Option(discord.SlashCommandOptionType.attachment,description="upload an image",required=False),url:discord.Option(str, "input link",default=None,required=False)):
         await ctx.defer()
-
         from util import imagehandler,embedhelper
         from PIL import Image
         import pathlib
@@ -76,8 +75,6 @@ class Fun(commands.Cog):
         _ = embedhelper.createEmbed(embedtitle="the coin was flipped!11",embeddescription='',ctx=ctx)
         _.add_field(name='coin',value="tails" if randint(1,500)%2 > 0 else "paws")
         await ctx.respond(embed=_)
-
-
 
 def setup(bot):
     bot.add_cog(Fun(bot))
