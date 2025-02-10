@@ -33,7 +33,7 @@ async def on_application_command_error(
     _ = exceptionhelper.exceptionEmbed(ctx,error)
     log(str(error))
     await ctx.respond(embed=_)
-    #await ctx.delete(delay=5)
+    await ctx.delete(delay=10)
 
 token = str(os.getenv("TOKEN"))
 watchfox.run(token)
