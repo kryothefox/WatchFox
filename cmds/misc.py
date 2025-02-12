@@ -37,7 +37,8 @@ class Misc(commands.Cog):
         
         _.set_image(url='attachment://tempColor.gif')
         await ctx.respond(file=colorFile, embed=_)
-        colorFile.close()
+        colorFile.close() ## avoid memleaks uwu
+        randomColorImage.close()
         
 
 
