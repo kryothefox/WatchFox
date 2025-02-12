@@ -76,5 +76,7 @@ class Fun(commands.Cog):
         _.add_field(name='coin',value="tails" if randint(1,500)%2 > 0 else "paws")
         await ctx.respond(embed=_)
 
+
+
 def setup(bot):
     bot.add_cog(Fun(bot))

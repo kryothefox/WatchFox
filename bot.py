@@ -22,6 +22,7 @@ watchfox.load_extension('cmds.utils')
 watchfox.load_extension('cmds.users')
 watchfox.load_extension('cmds.help')
 watchfox.load_extension('cmds.fun')
+watchfox.load_extension('cmds.misc')
 
 
 @watchfox.event
