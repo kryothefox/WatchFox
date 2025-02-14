@@ -29,7 +29,6 @@ watchfox.load_extension('cmds.misc')
 async def on_application_command(ctx:discord.ApplicationContext):
     log(f"{ctx.command} was issued by {ctx.author.name} at {datetime.datetime.now()}")
     
-     
 
 @watchfox.event
 async def on_application_command_error(
