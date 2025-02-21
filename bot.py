@@ -20,7 +20,7 @@ watchfox = discord.Bot(intents=botIntents)
 async def on_ready():
     import datetime
     log(f"Bot started on {str(datetime.date.today())} at {datetime.datetime.now().strftime('%H:%M %p')}")
-    log("do i love .....?")
+    log("do i love .....? i do")
 
 
 watchfox.load_extension('cmds.utils')
