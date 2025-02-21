@@ -1,5 +1,6 @@
 #IMPORT LIBRARIES
 import discord, datetime
+from discord import Intents
 from discord.ext import commands
 from dotenv import load_dotenv
 from util import embedhelper
@@ -10,7 +11,10 @@ import os
 dotenv = load_dotenv('.\\assets\\.env')
 if(not dotenv): raise FileNotFoundError
 
-watchfox = discord.Bot()
+botIntents = discord.Intents.default()
+botIntents.message_content = True
+
+watchfox = discord.Bot(intents=botIntents)
 
 @watchfox.event
 async def on_ready():

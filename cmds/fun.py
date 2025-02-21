@@ -7,11 +7,15 @@ class Fun(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
+    
     @discord.Cog.listener()
     async def on_ready(self):
         log(f'{self.qualified_name} has been loaded')
 
+    appContext = discord.ApplicationContext
+    
     fungroup = discord.SlashCommandGroup("fun","fun stuff for entertainment uwu")
+
 
     @fungroup.command(name="8ball",description="funny random thingy")
     @commands.cooldown(1,10,commands.BucketType.user)
@@ -76,7 +80,41 @@ class Fun(commands.Cog):
         _.add_field(name='coin',value="tails" if randint(1,500)%2 > 0 else "paws")
         await ctx.respond(embed=_)
 
+    @fungroup.command(name='guessthenumber', description='guess the random number for a cookie :3')
+    @commands.cooldown(1,20,commands.BucketType.user)
+    async def guessthenumber(self, ctx: appContext, max: discord.Option(int,required=False,min_value=1,default=10,description="the maximum the random number should be, optional :3")):
+        from random import randint
+        from util import embedhelper
+        await ctx.defer()
 
+        def check(msg):
+            return msg.author.id == ctx.author.id and msg.channel.id == ctx.channel_id
+        
+        queryEmbed = embedhelper.createEmbed('guess the number!',"if you get it right you get cookie :3",ctx)
+        queryEmbed.add_field(name=f"guess a number between 1 and {max}",value='')
+     
+        guessed = False
+        randomNumber = randint(1,max)
+        print(randomNumber)
+        await ctx.respond(embed=queryEmbed)
+        while guessed == False:
+            try:
+                response = await ctx.bot.wait_for(event='message',check=check,timeout=30)
+            except TimeoutError:
+                ctx.followup.send("response timeout")
+
+            if(response.content != str(randomNumber)):
+                wrongEmbed = embedhelper.createEmbed('nu uh','wrong guess grr...',ctx,[255,0,0])
+                wrongAnsInteraction = await ctx.interaction.followup.send(embed=wrongEmbed)
+                await wrongAnsInteraction.delete(delay=5)
+            else:
+                guessed = True
+                correctEmbed = embedhelper.createEmbed('yippie!',f'you guessed correctly, the number was {randomNumber}',ctx,[0,255,0])
+                await ctx.interaction.followup.send(embed=correctEmbed)
+
+
+
+        
 
 def setup(bot):
     bot.add_cog(Fun(bot))
