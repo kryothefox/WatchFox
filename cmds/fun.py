@@ -82,7 +82,7 @@ class Fun(commands.Cog):
 
     @fungroup.command(name='guessthenumber', description='guess the random number for a cookie :3')
     @commands.cooldown(1,20,commands.BucketType.user)
-    async def guessthenumber(self, ctx: appContext, max: discord.Option(int,required=False,min_value=1,default=10,description="the maximum the random number should be, optional :3")):
+    async def guessthenumber(self, ctx: appContext, max: discord.Option(int,required=False,min_value=1,max_value=1000,default=10,description="the maximum the random number should be, optional :3")):
         from random import randint
         from util import embedhelper
         await ctx.defer()
@@ -100,11 +100,13 @@ class Fun(commands.Cog):
         while guessed == False:
             try:
                 response = await ctx.bot.wait_for(event='message',check=check,timeout=30)
+
             except TimeoutError:
-                ctx.followup.send("response timeout")
+                await ctx.followup.send("response timeout")
 
             if(response.content != str(randomNumber)):
                 wrongEmbed = embedhelper.createEmbed('nu uh','wrong guess grr...',ctx,[255,0,0])
+                wrongEmbed.add_field(name='',value=f"the generated number is {"higher" if randomNumber > int(response.content) else "lower"}")
                 wrongAnsInteraction = await ctx.interaction.followup.send(embed=wrongEmbed)
                 await wrongAnsInteraction.delete(delay=5)
             else:
