@@ -82,7 +82,7 @@ class Fun(commands.Cog):
 
     @fungroup.command(name='guessthenumber', description='guess the random number for a cookie :3')
     @commands.cooldown(1,20,commands.BucketType.user)
-    async def guessthenumber(self, ctx: appContext, max: discord.Option(int,required=False,min_value=1,max_value=1000,default=10,description="the maximum the random number should be, optional :3")):
+    async def guessthenumber(self, ctx: appContext, max: discord.Option(int,required=False,min_value=1,max_value=1000000,default=10,description="the maximum the random number should be, optional :3")):
         from random import randint
         from util import embedhelper
         await ctx.defer()
