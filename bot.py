@@ -4,11 +4,12 @@ from discord import Intents
 from discord.ext import commands
 from dotenv import load_dotenv
 from util import embedhelper
+from pathlib import Path
 from util.logger import log
 import os
 
 #DEFINE .ENV OR ELSE NO TOKEN X3
-dotenv = load_dotenv('.\\assets\\.env')
+dotenv = load_dotenv(Path('./assets/.env'))
 if(not dotenv): raise FileNotFoundError
 
 botIntents = discord.Intents.default()
