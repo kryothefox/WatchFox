@@ -13,4 +13,4 @@ ydl_opts = {
 
 with yt_dlp.YoutubeDL(ydl_opts) as ythandle:
     dl = ythandle.download(url_list=['https://soundcloud.com/xaxaxaxaxaxaxaxaxaaxa/the-living-tombstone-cats-sped-up'])
-    
+    ythandle.sanitize_info(ythandle.extract_info)
