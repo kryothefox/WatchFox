@@ -29,7 +29,8 @@ class Music(commands.Cog):
             embedtitle=f'Song info for "{info['title']}"',
             embeddescription='',
             ctx=ctx)
-        embed.set_thumbnail(url=info['thumbnail'])
+
+        embed.set_thumbnail(url=info['thumbnails'][0]['url'])
 
         if(info['duration_string']): embed.add_field(name='Duration',value=f'{info['duration_string']}',inline=False)
         if(info['uploader']): embed.add_field(name='Uploader',value=f'{info['uploader']}',inline=False)

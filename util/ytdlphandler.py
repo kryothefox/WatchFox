@@ -26,4 +26,3 @@ def getMusicInfo(url):
         #    file.write(str(santitized))
         #print(f"{santitized['title']},{santitized['uploader']},{santitized['thumbnail']},{santitized['channel']}") 
         return santitized
-
