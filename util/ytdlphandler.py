@@ -1,6 +1,44 @@
-import yt_dlp,pathlib
+import yt_dlp,pathlib,discord, threading, asyncio
+from util.embedhelper import createEmbed
+from util.exceptionhelper import exceptionEmbed
 
-ydl_opts = {
+
+def extractMusicInfo(url):
+
+    ydl_opts = {
+    'postprocessors': [
+    {
+        'key' : 'ReturnYoutubeDislike',
+        'when' : "pre_process"
+    }]
+    }
+    with yt_dlp.YoutubeDL(ydl_opts) as ythandle:
+        info = ythandle.extract_info(url,download=False)
+        santitized = ythandle.sanitize_info(info,True)
+        return santitized
+
+
+
+
+
+
+
+async def getMusicInfo(url,ctx):
+        currentLoop = asyncio.get_event_loop()
+        thread = await asyncio.to_thread(extractMusicInfo,url)
+        return thread
+
+
+    
+
+
+
+
+async def downloadMusic(url, ctx : discord.ApplicationContext):
+    loop = asyncio.get_running_loop()  
+
+
+    ydl_opts = {
     'format': 'bestaudio/best',
     'postprocessors': [{
         'key': 'FFmpegExtractAudio',
@@ -12,17 +50,8 @@ ydl_opts = {
         'when' : "pre_process"
     },
     ],
-    'quiet' : True,
-    'outtmpl': '%(title)s.%(ext)s'
-}
-
-def getMusicInfo(url):
+    'outtmpl': '%(title)s.%(ext)s',
+    } 
     with yt_dlp.YoutubeDL(ydl_opts) as ythandle:
-        info = ythandle.extract_info(url,download=False)
-        santitized = ythandle.sanitize_info(info,True)
-        #infoPath = pathlib.Path('./info.json')
-        #if(infoPath.exists()): infoPath.unlink() 
-        #with open('./info.json','a',encoding='utf-8') as file:
-        #    file.write(str(santitized))
-        #print(f"{santitized['title']},{santitized['uploader']},{santitized['thumbnail']},{santitized['channel']}") 
-        return santitized
+        ythandle.download('url')
+

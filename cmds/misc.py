@@ -39,7 +39,6 @@ class Misc(commands.Cog):
         await ctx.respond(file=colorFile, embed=_)
         colorFile.close() ## avoid memleaks uwu
         randomColorImage.close()
-        
 
 
 def setup(bot):

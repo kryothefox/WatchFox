@@ -16,23 +16,25 @@ class Music(commands.Cog):
     musicCommandGroup = discord.SlashCommandGroup(name="music",description="commands related to music")
 
     @musicCommandGroup.command(name="getsonginfo",description="gets song info-")
-    @commands.cooldown(1,60,commands.BucketType.member)
+    @commands.cooldown(1,20,commands.BucketType.member)
     async def getsonginfo(self ,ctx: discord.ApplicationContext, url: discord.Option(str,description='the url of the song or video ;w;')):
         import datetime
         await ctx.defer()
-
+        
         if(not processurl.validateURL(url)): raise ValueError('the inputted URL was not valid ;w;')
-
-        info = ytdlphandler.getMusicInfo(url)
+        
+        info = await ytdlphandler.getMusicInfo(url)
+        print(info)
+        
         
         embed = createEmbed(
-            embedtitle=f'Song info for "{info['title']}"',
+            embedtitle=f'"{info['title']}"',
             embeddescription='',
             ctx=ctx)
 
         embed.set_thumbnail(url=info['thumbnails'][0]['url'])
-
-        if(info['duration_string']): embed.add_field(name='Duration',value=f'{info['duration_string']}',inline=False)
+        print(info['duration_string'])
+        if(info['duration_string']): embed.add_field(name='Duration',value=f'{info['duration_string']}',inline=False) 
         if(info['uploader']): embed.add_field(name='Uploader',value=f'{info['uploader']}',inline=False)
         if(info['timestamp']): embed.add_field(name='Time of creation', value=f"{datetime.datetime.fromtimestamp(info['timestamp']).strftime("%H:%M - %d %b %Y")}",inline=False)
         if(info['view_count']): embed.add_field(name='Views',value=f"{info['view_count']}",inline=True)
@@ -43,9 +45,14 @@ class Music(commands.Cog):
             if(info['dislike_count']):
                  embed.add_field(name='Dislikes',value=f"{info['dislike_count']}",inline=True)
 
+        print(info)
         await ctx.respond(embed=embed)
 
-
+    @musicCommandGroup.command(name="downloadsong",description="tries to download the song ;w;")
+    @commands.cooldown(1,30,commands.BucketType.member)
+    async def downloadsong(self ,ctx: discord.ApplicationContext, url: discord.Option(str,description='the url of the song or video ;w;')):
+        await ctx.defer()
+        #WIP
 
 def setup(bot):
     bot.add_cog(Music(bot))
